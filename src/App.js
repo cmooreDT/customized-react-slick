@@ -1,25 +1,87 @@
-import logo from './logo.svg';
-import './App.css';
+import './Carousel.scss';
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import React, { Component} from 'react';
+import Slider from 'react-slick'
+import data from "./slides-cats.json";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class AppendDots extends Component {
+    state = {
+        activeSlide: 0,
+        activeSlide2: 0
+    };
+    render(){
+        const allCount = document.getElementsByClassName('slide-button').length;
+        const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
+            <button
+                {...props}
+                className={
+                "slick-prev slick-arrow" +
+                (currentSlide === 0 ? " slick-disabled" : "")
+                }
+                aria-hidden="true"
+                aria-disabled={currentSlide === 0 ? true : false}
+                type="button"
+                aria-label="previous slide"
+            >
+                Previous
+            </button>
+        );
+        const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
+            <button
+                {...props}
+                className={
+                    "slick-next slick-arrow" +
+                    (currentSlide === slideCount - 1 ? " slick-disabled" : "")
+                }
+                aria-hidden="true"
+                aria-disabled={currentSlide === slideCount - 1 ? true : false}
+                type="button"
+                aria-label="next slide"
+            >
+                Next
+            </button>
+        );
+        const settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            draggable: false,
+            lazyLoad: false,
+            prevArrow: <SlickArrowLeft />,
+            nextArrow: <SlickArrowRight />,
+            beforeChange: (current, next) => {
+                this.setState({ activeSlide: next });
+            },
+            afterChange: current => {
+                this.setState({ activeSlide2: current });
+            },
+            customPaging: function(i) {
+                return (
+                    <button
+                    className="slide-button"
+                    id={`slide-${i + 1}`}
+                    aria-label={`Slide ${i + 1} of ${allCount}`}>
+                        {i + 1}
+                    </button>
+                )
+            }
+        };
+        return (
+            <div className="App">
+                <div className="slick-container">
+                    <Slider {...settings}>
+                        {data.map((item, index) => (
+                            <div key={index} id={index} aria-label={`Slide ${index + 1} of ${data.length}`}>
+                                <img src={item.image} alt={item.description} />
+                                <p>{item.details}</p>
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
+            </div>
+        );
+    }
 }
-
-export default App;
