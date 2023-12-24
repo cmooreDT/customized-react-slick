@@ -1,4 +1,6 @@
+# React Slick carousel
 https://react-slick.neostack.com/docs/get-started
+
 Standard react-slick and slick-carousel but with added accessibility updates and responsive design
 
 ## Dependencies used:
