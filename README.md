@@ -18,3 +18,6 @@ https://en.wikipedia.org/wiki/Kitten
 1. https://pixabay.com/photos/kittens-pet-felines-cats-animals-3535404/
 1. https://pixabay.com/photos/kittens-pets-sleeping-cats-animal-1916542/
 1. https://pixabay.com/photos/cat-kitten-feline-pet-animal-4894153/
+
+### Demo
+http://christinecodes.com/react-slick/
